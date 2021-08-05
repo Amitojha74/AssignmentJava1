@@ -6,11 +6,12 @@ import java.util.Scanner;
 
 public class TestApplication {
 
+    private static List<Book> book;
+
     public static void main(String[] args){
         Scanner sc=new Scanner(System.in);
         BookManage b = new BookManage();
         int i,ch,ch1,c=0;
-        List<Book> book=new ArrayList<>();
 
         List<User> user=new ArrayList<>();
         user.add(new User(101,"Amit"));
