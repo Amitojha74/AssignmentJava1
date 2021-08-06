@@ -1,4 +1,5 @@
 package main;
+import java.util.Objects;
 
 public class Book {
     private int bid;
@@ -8,13 +9,11 @@ public class Book {
     private int copies;
     private int userId;
 
-    static int bid1=0;
-
     public Book() {
     }
 
-    public Book(String name, String author, String subject, int copies, int userId) {
-        this.bid = setBid();
+    public Book(int bid, String name, String author, String subject, int copies, int userId) {
+        this.bid = bid;
         this.name = name;
         this.author = author;
         this.subject = subject;
@@ -22,13 +21,20 @@ public class Book {
         this.userId = userId;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     public int getBid() {
         return bid;
     }
 
-    public static int setBid() {
-         bid1++;
-         return bid1;
+    public void setBid(int bid) {
+        this.bid = bid;
     }
 
     public String getName() {
@@ -63,22 +69,14 @@ public class Book {
         this.copies = copies;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
     @Override
     public String toString() {
         return "Book{" +
-                "bid=" + this.bid +
+                "bid=" + bid +
                 ", name='" + name + '\'' +
                 ", author='" + author + '\'' +
                 ", subject='" + subject + '\'' +
-                ", copies='" + copies + '\'' +
+                ", copies=" + copies +
                 ", userId=" + userId +
                 '}';
     }
