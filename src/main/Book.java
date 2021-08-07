@@ -8,6 +8,8 @@ public class Book {
     private String subject;
     private int copies;
     private int userId;
+    private String issueDate;
+    private String returnDate;
 
     public Book() {
     }
@@ -19,6 +21,33 @@ public class Book {
         this.subject = subject;
         this.copies = copies;
         this.userId = userId;
+    }
+
+    public Book(int bid, String name, String author, String subject, int copies, int userId, String issueDate, String returnDate) {
+        this.bid = bid;
+        this.name = name;
+        this.author = author;
+        this.subject = subject;
+        this.copies = copies;
+        this.userId = userId;
+        this.issueDate = issueDate;
+        this.returnDate = returnDate;
+    }
+
+    public String getIssueDate() {
+        return issueDate;
+    }
+
+    public void setIssueDate(String issueDate) {
+        this.issueDate = issueDate;
+    }
+
+    public String getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(String returnDate) {
+        this.returnDate = returnDate;
     }
 
     public int getUserId() {
@@ -78,6 +107,21 @@ public class Book {
                 ", subject='" + subject + '\'' +
                 ", copies=" + copies +
                 ", userId=" + userId +
+                ", issueDate='" + issueDate + '\'' +
+                ", returnDate='" + returnDate + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return getBid() == book.getBid() && getCopies() == book.getCopies() && getUserId() == book.getUserId() && getName().equals(book.getName()) && getAuthor().equals(book.getAuthor()) && getSubject().equals(book.getSubject());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getBid(), getName(), getAuthor(), getSubject(), getCopies(), getUserId());
     }
 }

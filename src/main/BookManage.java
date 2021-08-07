@@ -13,6 +13,10 @@ public class BookManage {
         System.out.println(book1);
     }
 
+    public void IssueBookList(){
+        System.out.println(book2);
+    }
+
     public void AddBook(int i){
         book1=new ArrayList<>();
         book1.add(new Book(1,"Programming in java","AO","CS",2,i));
@@ -21,43 +25,82 @@ public class BookManage {
         book1.add(new Book(4,"Programming in Python","AO1","CS",2,i));
         System.out.println("Book Added Successfully");
     }
-    public void IssueBook(int i,int bid){
-        String s=Integer.toString(bid);
-        Book b=new Book();
-        book2=new ArrayList<Book>();
-        List<Book> book=new ArrayList<>();
-        for(Book c:book1) {
-                if(s.equals(c.getBid())){
-                    book.add(c);
+
+    public void IssueBook(int i,String name){
+        book2=new ArrayList<>();
+        List<Book> b3=SearchBook(name);
+        Book b1=new Book();
+        for (Book b:b3) {
+            int c=b.getCopies();
+            int id=b.getBid();
+            if(c==0)
+            {
+                System.out.println("Book Not Available");
+            }
+            else{
+                b1.setBid(b.getBid());
+                b1.setName(b.getName());
+                b1.setAuthor(b.getAuthor());
+                b1.setSubject(b.getSubject());
+                b1.setUserId(i);
+                b1.setIssueDate("23 dec");
+                book2.add(b1);
+                c=c-1;
+                for (Book b2:book1) {
+                    if(b2.getBid()==id) {
+                        b2.setCopies(c);
+                        b2.setIssueDate("23 dec");
+                    }
+                }
             }
         }
         System.out.println(book2);
+        //book3.add book2;
+    }
 
-        //SearchBook();
-//        if(book1.isEmpty() || b.equals(book1.get(b.getCopies()))){
-//            System.out.println("Book Not available");
+    public void ReturnBook(int id){
+        book2=new ArrayList<>();
+//        List<Book> b1=SearchBook(name);
+//        for (Book b2: b1) {
+//            id=b2.getUserId();
+//            id2=b2.getBid();
 //        }
-//        else
-//            System.out.println("Book is issue");
-    }
-
-    public void ReturnBook(List<Book> book1){
-        Book b=new Book();
-        //SearchBook();
-        System.out.println("Book Search");
-        AddBook(b.getUserId());
-    }
-
-    public void SearchBook(String name){
-        List<Book> b2=new ArrayList<>();
-        //String name="Programming in java";
-        for (Book b:book1) {
-            if(b.getName().equals(name) || b.getAuthor().equals(name) || b.getSubject().equals(name)){
-                //book1.indexOf(b);
-                b2.add(b);
+        for (Book b3:book2) {
+            if(id==b3.getBid()){
+                b3.setReturnDate("24 dec");
+                //book2.add(b3);
+                break;
             }
         }
-        System.out.println("Book Search found");
-        System.out.println(b2);
+        for (Book b3:book1) {
+            if(b3.getBid()==id){
+                int c= b3.getCopies();
+                c=c+1;
+                b3.setCopies(c);
+                b3.setReturnDate("24 dec");
+                break;
+            }
+        }
+        System.out.println("Book Returned");
+        System.out.println(book2);
+    }
+
+    public List<Book> SearchBook(String name){
+        List<Book> b2=new ArrayList<>();
+        int c=1;
+            for (Book b : book1) {
+                if (b.getName().toLowerCase().equals(name.toLowerCase()) || b.getAuthor().equals(name) || b.getSubject().equals(name)) {
+                    b2.add(b);
+                    c++;
+                }
+            }
+        if(c==1){
+            System.out.println("Book Not Found");
+        }
+        else{
+            System.out.println("Book Search Result:");
+            System.out.println(b2);
+        }
+        return b2;
     }
 }

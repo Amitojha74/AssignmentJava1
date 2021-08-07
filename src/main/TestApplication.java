@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class TestApplication {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Scanner sc=new Scanner(System.in);
         BookManage b = new BookManage();
         Book b1=new Book();
@@ -32,30 +32,35 @@ public class TestApplication {
                 }
                 if (c == 1) {
                     while (true) {
-                        System.out.println("1. For Showing The All Books");
-                        System.out.println("2. For Adding A Book");
-                        System.out.println("3. For Searching A Book with Name,Author,Subject");
-                        System.out.println("4. For Issue A Book");
-                        System.out.println("5. For Returning A Book");
-                        System.out.println("6. For Requesting A Book");
-                        System.out.println("7. For Exit()");
+                        System.out.println("1. For Showing All Books");
+                        System.out.println("2. For Showing Issue Book List");
+                        System.out.println("3. For Adding A Book");
+                        System.out.println("4. For Searching A Book with Name,Author,Subject");
+                        System.out.println("5. For Issue A Book");
+                        System.out.println("6. For Returning A Book");
+                        System.out.println("7. For Requesting A Book");
+                        System.out.println("8. For Exit()");
                         ch = sc.nextInt();
                         if (ch == 1) {
                             b.ShowBook();
                         } else if (ch == 2) {
-                            b.AddBook(i);
+                            b.IssueBookList();
                         } else if (ch == 3) {
+                            b.AddBook(i);
+                        }
+                        else if(ch==4){
                             name=sc.next();
                             b.SearchBook(name);
                         }
-                        else if(ch==4){
-                            id=sc.nextInt();
-                            b.IssueBook(i,id);
-                        }
                         else if(ch==5){
-
+                            name=sc.next();
+                            b.IssueBook(i,name);
                         }
                         else if(ch==6){
+                            id=sc.nextInt();
+                            b.ReturnBook(id);
+                        }
+                        else if(ch==7){
 
                         }
                         else
