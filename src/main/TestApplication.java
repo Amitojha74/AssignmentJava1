@@ -39,7 +39,8 @@ public class TestApplication {
                         System.out.println("5. For Issue A Book");
                         System.out.println("6. For Returning A Book");
                         System.out.println("7. For Requesting A Book");
-                        System.out.println("8. For Exit()");
+                        System.out.println("8. Requesting Book List");
+                        System.out.println("9. For Exit()");
                         ch = sc.nextInt();
                         if (ch == 1) {
                             b.ShowBook();
@@ -53,15 +54,22 @@ public class TestApplication {
                             b.SearchBook(name);
                         }
                         else if(ch==5){
+                            System.out.println("Enter string to search book");
                             name=sc.next();
-                            b.IssueBook(i,name);
+                            System.out.println("Enter Id to which you issue book");
+                            id=sc.nextInt();
+                            b.IssueBook(name,id,i);
                         }
                         else if(ch==6){
+                            System.out.println("Enter Book Id");
                             id=sc.nextInt();
                             b.ReturnBook(id);
                         }
                         else if(ch==7){
-
+                            b.RequestBook(i);
+                        }
+                        else if(ch==8){
+                            b.ShowRequestBook();
                         }
                         else
                             break;
