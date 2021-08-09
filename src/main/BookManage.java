@@ -102,7 +102,8 @@ public class BookManage {
         List<Book> b2=new ArrayList<>();
         int c=1;
             for (Book b : book1) {
-                if (b.getName().equals(name) || b.getAuthor().equals(name) || b.getSubject().equals(name)) {
+                if (b.getName().toLowerCase().equals(name.toLowerCase()) || b.getAuthor().toLowerCase().equals(name.toLowerCase())
+                        || b.getSubject().toLowerCase().equals(name.toLowerCase())) {
                     b2.add(b);
                     c++;
                 }
