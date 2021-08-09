@@ -3,13 +3,14 @@ package main;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class BookManage {
 
+    //private CopyOnWriteArrayList<Book> book1;
     private List<Book> book1;
     private List<Book> issueBook;
-    private List<Book> book3;
-    private List<RequestBook> reqBook;
+    private CopyOnWriteArrayList<RequestBook> reqBook;
 
     Scanner sc=new Scanner(System.in);
 
@@ -19,6 +20,7 @@ public class BookManage {
     }
 
     public void AddBook(int i){
+        //book1=new CopyOnWriteArrayList<>();
         book1=new ArrayList<>();
         book1.add(new Book(1,"Java","AO","CS",2,i));
         book1.add(new Book(2,"C","A","CS",2,i));
@@ -30,7 +32,6 @@ public class BookManage {
     public void IssueBook(String name,int uid,int i) {
         int c = 0, id = 0, a = 0;
         issueBook = new ArrayList<>();
-        //book3=new ArrayList<>();
         List<Book> b3 = SearchBook(name);
         System.out.println("Enter Book Id");
         id = sc.nextInt();
@@ -50,18 +51,14 @@ public class BookManage {
                         b1.setUserId(uid);
                         b1.setIssueDate("23 dec");
                         issueBook.add(b1);
+                        System.out.println(issueBook);
                     }
                     c = c - 1;
                     for (Book b2 : book1) {
                         if (b2.getBid() == id) {
                             b2.setCopies(c);
                             b2.setIssueDate("23 dec");
-                        }
-                    }
-                    for (RequestBook req: reqBook) {
-                        if(req.getBid()==id){
-                            int index=reqBook.indexOf(req);
-                            reqBook.remove(index);
+                            break;
                         }
                     }
                 } else {
@@ -69,7 +66,14 @@ public class BookManage {
                 }
             }
         }
-        System.out.println(issueBook);
+        if(reqBook.size()!=0){
+                for (RequestBook req : reqBook) {
+                    if (req.getBid() == id) {
+                        int index = reqBook.indexOf(req);
+                        reqBook.remove(index);
+                    }
+                }
+        }
     }
 
 
@@ -119,9 +123,8 @@ public class BookManage {
     }
 
     public void RequestBook(int i){
-        reqBook=new ArrayList<>();
+        reqBook=new CopyOnWriteArrayList<>();
         reqBook.add(new RequestBook(1,"Java","AO","CS",i));
-        reqBook.add(new RequestBook(2,"C","A","CS",i));
         System.out.println("Book Is Requested");
         System.out.println(reqBook);
     }
