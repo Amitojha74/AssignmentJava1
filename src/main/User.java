@@ -5,6 +5,8 @@ public class User {
     private int userId;
     private String name;
 
+    //private Book book;
+
     public User() {
     }
 
@@ -12,6 +14,12 @@ public class User {
         this.userId = userId;
         this.name = name;
     }
+
+//    public User(int userId, String name, Book book) {
+//        this.userId = userId;
+//        this.name = name;
+//        this.book = book;
+//    }
 
     public int getUserId() {
         return userId;

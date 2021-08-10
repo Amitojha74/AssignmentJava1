@@ -1,17 +1,19 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class TestApplication {
 
     public static void main(String[] args) {
         Scanner sc=new Scanner(System.in);
-        BookManage b = new BookManage();
+        BookServiceImpl b = new BookServiceImpl();
         Book b1=new Book();
         int i,ch,ch1,c=0,id;
         String name;
+        List<Book> book1=new ArrayList<>();
+        List<Book> issue=new ArrayList<>();
+        Queue<RequestBook> reqBook=new PriorityQueue<>();
+
         List<User> user=new ArrayList<>();
         user.add(new User(101,"Amit"));
         user.add(new User(102,"Aman"));
@@ -43,33 +45,60 @@ public class TestApplication {
                         System.out.println("9. For Exit()");
                         ch = sc.nextInt();
                         if (ch == 1) {
-                            b.ShowBook();
+                            System.out.println("All Book List");
+                            System.out.println(book1);
                         } else if (ch == 2) {
-                            b.IssueBookList();
+                            System.out.println("Issue Book List");
+                            System.out.println(issue);
                         } else if (ch == 3) {
-                            b.AddBook(i);
+                            book1=b.addBook(i);
+                            System.out.println("Book Added Successfully");
                         }
                         else if(ch==4){
-                            name=sc.next();
-                            b.SearchBook(name);
-                        }
-                        else if(ch==5){
+                            List<Book> searchBook=new ArrayList<>();
                             System.out.println("Enter string to search book");
                             name=sc.next();
-                            System.out.println("Enter Id to which you issue book");
-                            id=sc.nextInt();
-                            b.IssueBook(name,id,i);
+                            searchBook=b.searchBook(name);
+                            System.out.println("Search Result is:");
+                            System.out.println(searchBook);
+                        }
+                        else if(ch==5) {
+                            System.out.println("Enter string to search book");
+                            name = sc.next();
+                            List<Book> searchBook = new ArrayList<>();
+                            searchBook = b.searchBook(name);
+                            if (searchBook.isEmpty()) {
+                                System.out.println("Book Not Available with Search String");
+                            } else {
+                                System.out.println(searchBook);
+                                System.out.println("Enter Id to which you issue book");
+                                id = sc.nextInt();
+                                System.out.println("Enter Book Id");
+                                int bookId = sc.nextInt();
+                                issue = b.issueBook(bookId, id, i, searchBook);
+                                //List<Book> issue=b.issueBook(name,id,i);
+                                if (issue.isEmpty()) {
+                                    System.out.println("Book Not Available or you have not authority to issue");
+                                } else {
+                                    System.out.println("Book Issue Details");
+                                    System.out.println(issue);
+                                }
+                            }
                         }
                         else if(ch==6){
                             System.out.println("Enter Book Id");
                             id=sc.nextInt();
-                            b.ReturnBook(id);
+                            b.returnBook(id,issue);
+                            System.out.println("Book Returned Successfully");
                         }
                         else if(ch==7){
-                            b.RequestBook(i);
+                            reqBook=b.requestBook(i);
+                            System.out.println("Book Is Requested");
+                            System.out.println(reqBook);
                         }
                         else if(ch==8){
-                            b.ShowRequestBook();
+                            System.out.println("Requested book List:");
+                            System.out.println(reqBook);
                         }
                         else
                             break;
