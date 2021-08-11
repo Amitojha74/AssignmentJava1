@@ -16,12 +16,6 @@ public class BookServiceImpl implements BookService {
         return book1;
     }
 
-//        book1.add(new Book(1,"Java","AO","CS",2,i));
-//        book1.add(new Book(2,"C","A","CS",2,i));
-//        book1.add(new Book(3,"C++","O","CS",2,i));
-//        book1.add(new Book(4,"Python","AO1","CS",2,i));
-
-
 
     public List<Book> issueBook(int bookId, int id, int i, List<Book> b3) {
         int c = 0, a = 0;
