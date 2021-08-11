@@ -5,14 +5,14 @@ import java.util.Queue;
 
 public interface BookService {
 
-    public List<Book> addBook(int i);
+    public List<Book> addBook(int userId);
 
-    public List<Book> issueBook(int bookId, int id, int i, List<Book> b3);
+    public List<Book> issueBook(int bookId, int id, int userId, List<Book> searchBook);
 
-    public void returnBook(int id, List<Book> issueBook);
+    public void returnBook(int bookId, List<Book> issueBook);
 
     public List<Book> searchBook(String name);
 
-    public Queue<RequestBook> requestBook(int i);
+    public Queue<RequestBook> requestBook(int requestedUserId);
 
 }

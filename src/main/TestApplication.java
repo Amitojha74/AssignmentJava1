@@ -5,10 +5,10 @@ import java.util.*;
 public class TestApplication {
 
     public static void main(String[] args) {
-        Scanner sc=new Scanner(System.in);
-        BookServiceImpl b = new BookServiceImpl();
+        Scanner input =new Scanner(System.in);
+        BookServiceImpl bookServiceImpl = new BookServiceImpl();
         Book b1=new Book();
-        int i,ch,ch1,c=0,id;
+        int userId,ch,ch1,c=0,id;
         String name;
         List<Book> book1=new ArrayList<>();
         List<Book> issue=new ArrayList<>();
@@ -23,12 +23,12 @@ public class TestApplication {
             System.out.println("Welcome to the Book App");
             System.out.println("1. For Enter into System");
             System.out.println("2. For Exit()");
-            ch1 = sc.nextInt();
+            ch1 = input.nextInt();
             if(ch1==1) {
                 System.out.println("Enter User Id: ");
-                i = sc.nextInt();
-                for (User u1 : user) {
-                    if (i == u1.getUserId()) {
+                userId= input.nextInt();
+                for (User user1 : user) {
+                    if (userId == user1.getUserId()) {
                         c = 1;
                     }
                 }
@@ -43,7 +43,7 @@ public class TestApplication {
                         System.out.println("7. For Requesting A Book");
                         System.out.println("8. Requesting Book List");
                         System.out.println("9. For Exit()");
-                        ch = sc.nextInt();
+                        ch = input.nextInt();
                         if (ch == 1) {
                             System.out.println("All Book List");
                             System.out.println(book1);
@@ -51,32 +51,31 @@ public class TestApplication {
                             System.out.println("Issue Book List");
                             System.out.println(issue);
                         } else if (ch == 3) {
-                            book1=b.addBook(i);
+                            book1= bookServiceImpl.addBook(userId);
                             System.out.println("Book Added Successfully");
                         }
                         else if(ch==4){
                             List<Book> searchBook=new ArrayList<>();
                             System.out.println("Enter string to search book");
-                            name=sc.next();
-                            searchBook=b.searchBook(name);
+                            name= input.next();
+                            searchBook= bookServiceImpl.searchBook(name);
                             System.out.println("Search Result is:");
                             System.out.println(searchBook);
                         }
                         else if(ch==5) {
                             System.out.println("Enter string to search book");
-                            name = sc.next();
+                            name = input.next();
                             List<Book> searchBook = new ArrayList<>();
-                            searchBook = b.searchBook(name);
+                            searchBook = bookServiceImpl.searchBook(name);
                             if (searchBook.isEmpty()) {
                                 System.out.println("Book Not Available with Search String");
                             } else {
                                 System.out.println(searchBook);
                                 System.out.println("Enter Id to which you issue book");
-                                id = sc.nextInt();
+                                id = input.nextInt();
                                 System.out.println("Enter Book Id");
-                                int bookId = sc.nextInt();
-                                issue = b.issueBook(bookId, id, i, searchBook);
-                                //List<Book> issue=b.issueBook(name,id,i);
+                                int bookId = input.nextInt();
+                                issue = bookServiceImpl.issueBook(bookId, id, userId, searchBook);
                                 if (issue.isEmpty()) {
                                     System.out.println("Book Not Available or you have not authority to issue");
                                 } else {
@@ -87,12 +86,12 @@ public class TestApplication {
                         }
                         else if(ch==6){
                             System.out.println("Enter Book Id");
-                            id=sc.nextInt();
-                            b.returnBook(id,issue);
+                            id= input.nextInt();
+                            bookServiceImpl.returnBook(id,issue);
                             System.out.println("Book Returned Successfully");
                         }
                         else if(ch==7){
-                            reqBook=b.requestBook(i);
+                            reqBook= bookServiceImpl.requestBook(userId);
                             System.out.println("Book Is Requested");
                             System.out.println(reqBook);
                         }

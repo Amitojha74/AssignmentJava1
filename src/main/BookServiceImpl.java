@@ -6,39 +6,39 @@ public class BookServiceImpl implements BookService {
 
     private List<Book> issueBook;
     private Queue<RequestBook> reqBook=new PriorityQueue<>();
-    private List<Book> book1=new ArrayList<>();
+    private List<Book> allBook =new ArrayList<>();
 
 
-    public List<Book> addBook(int i){
-        BookList bmp=new BookList();
-        List<Book> book=bmp.addBook(i);
-        book1.addAll(book);
-        return book1;
+    public List<Book> addBook(int userId){
+        BookList bookList=new BookList();
+        List<Book> book=bookList.addBook(userId);
+        allBook.addAll(book);
+        return allBook;
     }
 
 
-    public List<Book> issueBook(int bookId, int id, int i, List<Book> b3) {
-        int c = 0, a = 0;
+    public List<Book> issueBook(int bookId, int id, int userId, List<Book> searchBook) {
+        int copies = 0, bookOwnerId = 0;
         issueBook = new ArrayList<>();
-        Book b1 = new Book();
-        for (Book b : b3) {
-            if (bookId == b.getBid()) {
-                c = b.getCopies();
-                a = b.getUserId();
-                if (a == i) {
-                    if (c != 0) {
-                        b1.setBid(b.getBid());
-                        b1.setName(b.getName());
-                        b1.setAuthor(b.getAuthor());
-                        b1.setSubject(b.getSubject());
-                        b1.setUserId(id);
-                        b1.setIssueDate("23 dec");
-                        issueBook.add(b1);
-                        c = c - 1;
-                        for (Book b2 : book1) {
-                            if (b2.getBid() == bookId) {
-                                b2.setCopies(c);
-                                b2.setIssueDate("23 dec");
+        Book bookAdd = new Book();
+        for (Book book : searchBook) {
+            if (bookId == book.getBid()) {
+                copies = book.getCopies();
+                bookOwnerId = book.getUserId();
+                if (bookOwnerId == userId) {
+                    if (copies != 0) {
+                        bookAdd.setBid(book.getBid());
+                        bookAdd.setName(book.getName());
+                        bookAdd.setAuthor(book.getAuthor());
+                        bookAdd.setSubject(book.getSubject());
+                        bookAdd.setUserId(id);
+                        bookAdd.setIssueDate("23 dec");
+                        issueBook.add(bookAdd);
+                        copies = copies - 1;
+                        for (Book book2 : allBook) {
+                            if (book2.getBid() == bookId) {
+                                book2.setCopies(copies);
+                                book2.setIssueDate("23 dec");
                                 break;
                             }
                         }
@@ -50,8 +50,8 @@ public class BookServiceImpl implements BookService {
             }
         }
         if(reqBook.size()!=0){
-            for (RequestBook req : reqBook) {
-                if (req.getBid() == bookId) {
+            for (RequestBook requestBook : reqBook) {
+                if (requestBook.getBid() == bookId) {
                     reqBook.poll();
                 }
             }
@@ -60,19 +60,19 @@ public class BookServiceImpl implements BookService {
     }
 
 
-    public void returnBook(int id, List<Book> issueBook){
-        for (Book b3:issueBook) {
-            if(b3.getBid()==id){
-                b3.setReturnDate("24 dec");
+    public void returnBook(int bookId, List<Book> issueBook){
+        for (Book book3 :issueBook) {
+            if(book3.getBid()== bookId){
+                book3.setReturnDate("24 dec");
                 break;
             }
         }
-        for (Book b3:book1) {
-            if(b3.getBid()==id){
-                int c= b3.getCopies();
-                c=c+1;
-                b3.setCopies(c);
-                b3.setReturnDate("24 dec");
+        for (Book book4 : allBook) {
+            if(book4.getBid()== bookId){
+                int copy= book4.getCopies();
+                copy=copy+1;
+                book4.setCopies(copy);
+                book4.setReturnDate("24 dec");
                 break;
             }
         }
@@ -80,18 +80,18 @@ public class BookServiceImpl implements BookService {
 
     public List<Book> searchBook(String name){
         List<Book> searchBook =new ArrayList<>();
-        for (Book b : book1) {
-            if (b.getName().toLowerCase().equals(name.toLowerCase()) || b.getAuthor().toLowerCase().equals(name.toLowerCase())
-                    || b.getSubject().toLowerCase().equals(name.toLowerCase())) {
-                searchBook.add(b);
+        for (Book book : allBook) {
+            if (book.getName().toLowerCase().equals(name.toLowerCase()) || book.getAuthor().toLowerCase().equals(name.toLowerCase())
+                    || book.getSubject().toLowerCase().equals(name.toLowerCase())) {
+                searchBook.add(book);
             }
         }
         return searchBook;
     }
 
 
-    public Queue<RequestBook> requestBook(int i){
-        reqBook.add(new RequestBook(1,"Java","AO","CS",i));
+    public Queue<RequestBook> requestBook(int requestedUserId){
+        reqBook.add(new RequestBook(1,"Java","AO","CS", requestedUserId));
         return reqBook;
     }
 }
